@@ -1,34 +1,31 @@
 //1- Kullanilacak library import ederiz
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import SeasonDisplay from './SeasonDisplay'
+
+
 
 
 //2- Component olusturuyoruz
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { location: null, error: null }
+    state = { location: null, error: '' }
 
+    componentDidMount() {
         navigator.geolocation.getCurrentPosition(
-            //success
-            (location) => {
-                this.setState({ location: location.coords.latitude })
-                console.log(`location: `, this.state.location);
-            },
-            //error
-            (error) => {
-                this.setState({ error: error.message });
-                console.log(`error Message: `, this.state.error);
-            }
-        )
-    }
-
-    render() {
-        return (
-            <div>
-                <h1 style={{ textAlign: 'center' }}>this is season app</h1>
-            </div>
+            (location) => this.setState({ location: location.coords.latitude }),
+            (error) => this.setState({ error: error.message })
         );
+    }
+    render() {
+
+        if (this.state.error && !this.state.location) {
+            return <div>Error : {this.state.error}</div>
+        }
+        if (!this.state.error && this.state.location) {
+            return <SeasonDisplay enlem={this.state.location} />
+        }
+        return <div>Loading...</div>
+
     }
 }
 
