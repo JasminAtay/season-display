@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import SeasonDisplay from './SeasonDisplay'
-
+import Spinner from './Spinner'
 
 
 
@@ -24,7 +24,7 @@ class App extends Component {
         if (!this.state.error && this.state.location) {
             return <SeasonDisplay enlem={this.state.location} />
         }
-        return <div>Loading...</div>
+        return <SeasonDisplay text="please allow location"/>
 
     }
 }
